@@ -29,11 +29,15 @@ export default function Router() {
         { path: "*", element: <Navigate to="/404" replace /> },
       ],
     },
+    { path: "login", element: <LoginApp /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
 
 const GeneralApp = Loadable(
   lazy(() => import("../pages/dashboard/GeneralApp")),
+);
+const LoginApp = Loadable(
+  lazy(() => import("../pages/auth/index")),
 );
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
