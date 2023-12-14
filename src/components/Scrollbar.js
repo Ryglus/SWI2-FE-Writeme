@@ -1,68 +1,40 @@
-import PropTypes from 'prop-types';
-import SimpleBarReact from 'simplebar-react';
-// @mui
-import { alpha, styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import React from 'react';
+import { Stack } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { styled } from '@mui/system';
 
-// ----------------------------------------------------------------------
-
-const RootStyle = styled('div')(() => ({
-  flexGrow: 1,
+const StyledStack = styled(Stack)(({ theme }) => ({
+  overflow: 'auto',
+  overflowX: 'hidden',
   height: '100%',
-  overflow: 'scroll',
+  '&::-webkit-scrollbar': {
+    width: '6px',
+    transition: 'opacity 0.5s',
+    opacity: 1,
+  },
+  '&:hover::-webkit-scrollbar': {
+    opacity: 1,
+  },
+  '&::-webkit-scrollbar-track': {
+    background: theme.palette.mode === 'light' ? '#f1f1f1' : '#333',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: theme.palette.mode === 'light' ? '#888' : '#555',
+    borderRadius: '20px',
+    transition: 'background 0.5s',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: theme.palette.mode === 'light' ? '#555' : '#888',
+  },
 }));
 
-const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
-  // maxHeight: '100%',
-  '& .simplebar-scrollbar': {
-    '&:before': {
-      backgroundColor: alpha(theme.palette.grey[600], 0.48),
-    },
-    '&.simplebar-visible:before': {
-      opacity: 1,
-    },
-  },
-  '& .simplebar-track.simplebar-vertical': {
-    width: 10,
-  },
-  '& .simplebar-track.simplebar-horizontal .simplebar-scrollbar': {
-    height: 6,
-  },
-  '& .simplebar-mask': {
-    zIndex: 'inherit',
-  },
-  "& .simplebar-placeholder": {
-    height: '0 !important',
-  }
-}));
-
-// ----------------------------------------------------------------------
-
-Scrollbar.propTypes = {
-  children: PropTypes.node.isRequired,
-  sx: PropTypes.object,
-};
-
-export default function Scrollbar({ children, sx, ...other }) {
-  const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
-
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-
-  if (isMobile) {
-    return (
-      <Box sx={{ overflowX: 'auto', ...sx }} {...other}>
-        {children}
-      </Box>
-    );
-  }
-
+const ScrollBar = ({ children, ...props }) => {
+  const theme = useTheme();
   return (
-    <RootStyle>
-      <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other}>
-        {children}
-      </SimpleBarStyle>
-    </RootStyle>
+    <StyledStack theme={theme} {...props}>
+      {children}
+    </StyledStack>
   );
 }
 
-export {SimpleBarStyle};
+export default ScrollBar;

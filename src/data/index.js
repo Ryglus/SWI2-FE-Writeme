@@ -3,7 +3,6 @@ import {
   ChatCircleDots,
   Gear,
   GearSix,
-  Phone,
   SignOut,
   User,
   Users,
@@ -33,15 +32,11 @@ const Nav_Buttons = [
     index: 1,
     icon: <Users />,
   },
-  {
-    index: 2,
-    icon: <Phone />,
-  },
 ];
 
 const Nav_Setting = [
   {
-    index: 3,
+    index: 2,
     icon: <GearSix />,
   },
 ];
@@ -127,6 +122,26 @@ const ChatList = [
     pinned: false,
     online: false,
   },
+  {
+    id: 8,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    msg: faker.music.songName(),
+    time: "08:42",
+    unread: 0,
+    pinned: false,
+    online: false,
+  },
+  {
+    id: 9,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    msg: faker.music.songName(),
+    time: "08:42",
+    unread: 0,
+    pinned: false,
+    online: false,
+  },
 ];
 
 const Chat_History = [
@@ -188,6 +203,54 @@ const Chat_History = [
     message: "Yep, I can also do that",
     incoming: true,
     outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "This is a reply",
+    message: "Yep, I can also do that",
+    incoming: false,
+    outgoing: true,
   },
   {
     type: "msg",
