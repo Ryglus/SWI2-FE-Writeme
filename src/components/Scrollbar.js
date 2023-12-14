@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { Stack } from '@mui/material';
-import { useTheme } from "@mui/material/styles";
 import { styled } from '@mui/system';
 
 const StyledStack = styled(Stack)(({ theme }) => ({
@@ -28,17 +27,29 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const ScrollBar = ({ children }) => {
+const ScrollBar = ({ children, autoScrollTo }) => {
   const messagesEndRef = useRef(null);
+  const messagesStartRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [children]);
+  const scrollToTop = () => {
+    messagesStartRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (autoScrollTo === "bottom") {
+      scrollToBottom();
+    } else if (autoScrollTo === "top") {
+      scrollToTop();
+    }
+  }, [children, autoScrollTo]);
 
   return (
     <StyledStack sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"}>
+      <div ref={messagesStartRef} />
       {children}
       <div ref={messagesEndRef} />
     </StyledStack>

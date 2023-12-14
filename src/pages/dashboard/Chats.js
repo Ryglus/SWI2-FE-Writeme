@@ -3,7 +3,7 @@ import React from 'react';
 import { useTheme } from "@mui/material/styles";
 import { ArchiveBox, CircleDashed } from 'phosphor-react';
 import SearchBar from '../../components/SearchBar';
-import ChatElement from '../../components/ChatElement';
+import ChatElement from '../../components/Chat/ChatElement';
 import { ChatList } from '../../data';
 import ScrollBar from '../../components/Scrollbar';
 const Chats = () => {
@@ -30,7 +30,7 @@ const Chats = () => {
                     <Button variant="contained" color="primary">Archive</Button>
                 </Stack>
                 <Divider width={270} sx={{ alignSelf: "center" }} />
-                <ScrollBar sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"}>
+                <ScrollBar sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"} >
 
                     <Typography variant="subtitle2">Pinned</Typography>
                     {ChatList.filter((el) => el.pinned).map((el) => {
