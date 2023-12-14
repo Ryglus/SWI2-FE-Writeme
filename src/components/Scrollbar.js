@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Stack } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { styled } from '@mui/system';
@@ -28,13 +28,21 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const ScrollBar = ({ children, ...props }) => {
-  const theme = useTheme();
+const ScrollBar = ({ children }) => {
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollToBottom, [children]);
+
   return (
-    <StyledStack theme={theme} {...props}>
+    <StyledStack sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"}>
       {children}
+      <div ref={messagesEndRef} />
     </StyledStack>
   );
-}
+};
 
 export default ScrollBar;
