@@ -24,6 +24,8 @@ const SearchBar = () => {
     return (
         <Autocomplete
             options={searchResults}
+            clearOnBlur
+            selectOnFocus={false}
             getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
             renderOption={(props, option) => (
                 <Box component="li" {...props}>
