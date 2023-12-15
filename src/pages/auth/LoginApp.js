@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Stack, Divider } from '@mui/material';
-import logo from "../../assets/Images/logo.ico";
-import { useTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 import DefaultAuth from './default';
 import axios from 'axios';
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleButtonClick = async () => {
         try {
             const res = await axios.post(`http://localhost:8080/api/v1/auth/signin`, { username, password });
-            console.log(res)
+            localStorage.setItem("token",res.data)
+            navigate("/app");
         } catch (error) {
             console.error(error);
         }

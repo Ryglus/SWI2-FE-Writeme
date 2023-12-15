@@ -30,7 +30,7 @@ const RegisterApp = () => {
     return (
         <DefaultAuth>
             <Box sx={{ mt: 3 }}>
-                {response == null ? (
+                {response === null ? (
                     <>
                         <Divider sx={{ width: "100%" }} >
                             <Typography variant="h5">Sign Up</Typography>
@@ -107,7 +107,7 @@ const RegisterApp = () => {
                                 </Link>
                         </Stack>
                     </>
-                ) : response == "ok" ? (
+                ) : response === "ok" ? (
                     (<Stack spacing={2}>
                         <Divider sx={{ width: "100%" }} >
                             <Typography variant="subsection1">Welcome!</Typography>
