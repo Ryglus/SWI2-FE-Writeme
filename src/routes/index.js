@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from "react-router-dom";
 
 // layouts
 import DashboardLayout from "../layouts/dashboard";
-
+import AuthLayout from "../layouts/auth";
 // config
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
@@ -24,13 +24,20 @@ export default function Router() {
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element: <GeneralApp /> },
-        
+
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
       ],
     },
-    { path: "login", element: <LoginApp /> },
-    { path: "register", element: <RegisterApp /> },
+    {
+      path: "/",
+      element: <AuthLayout />,
+      children: [
+        { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
+        { path: "login", element: <LoginApp /> },
+        { path: "register", element: <RegisterApp /> },
+      ],
+    },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }

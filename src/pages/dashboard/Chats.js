@@ -30,7 +30,7 @@ const Chats = () => {
                     <Button variant="contained" color="primary">Archive</Button>
                 </Stack>
                 <Divider width={270} sx={{ alignSelf: "center" }} />
-                <ScrollBar sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"} >
+                <ScrollBar sx={{ paddingRight: "4px" }} spacing={1.5} direction={"column"} justifyContent={"space-between"} >
 
                     <Typography variant="subtitle2">Pinned</Typography>
                     {ChatList.filter((el) => el.pinned).map((el) => {

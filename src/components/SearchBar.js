@@ -25,6 +25,7 @@ const SearchBar = () => {
         <Autocomplete
             options={searchResults}
             clearOnBlur
+            freeSolo
             selectOnFocus={false}
             getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
             renderOption={(props, option) => (
