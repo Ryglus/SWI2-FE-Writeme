@@ -37,7 +37,7 @@ const MessageInput = ({ endpoint }) => {
 
     const sendRequest = () => {
 
-        axios.post("http://localhost:8080/api/v1" + endpoint, { message: inputValue })
+        axios.post("http://localhost:8080/api/v1" + endpoint, { recipient: "asd",text: inputValue })
             .then((response) => {
                 console.log(response.data);
             })

@@ -1,12 +1,29 @@
 import { Box, Button, Divider, IconButton, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
+import axios from 'axios';
 import { useTheme } from "@mui/material/styles";
 import { ArchiveBox, CircleDashed } from 'phosphor-react';
 import SearchBar from '../../components/SearchBar';
 import ChatElement from '../../components/Chat/ChatElement';
-import { ChatList } from '../../data';
 import ScrollBar from '../../components/Scrollbar';
 const Chats = () => {
+    const [chatList, setChatList] = useState([]);
+
+    useEffect(() => {
+        const fetchChatList = async () => {
+            try {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}` 
+                const response = await axios.get(`http://localhost:8080/api/v1/rooms`);
+                
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching chat list:', error);
+            }
+        };
+
+        fetchChatList();
+    }, []);
 
     const theme = useTheme();
     return (
@@ -33,15 +50,16 @@ const Chats = () => {
                 <ScrollBar sx={{ paddingRight: "4px" }} spacing={1.5} direction={"column"} justifyContent={"space-between"} >
 
                     <Typography variant="subtitle2">Pinned</Typography>
-                    {ChatList.filter((el) => el.pinned).map((el) => {
+                    {chatList.filter((el) => el.pinned).map((el) => {
                         return <ChatElement {...el} />;
                     })}
 
                     <Divider width={270} sx={{ alignSelf: "center" }} />
                     <Typography variant="subtitle2">Recent</Typography>
-                    {ChatList.filter((el) => !el.pinned).map((el) => {
+                    {chatList.filter((el) => !el.pinned).map((el) => {
                         return <ChatElement {...el} />;
                     })}
+                 
 
                 </ScrollBar>
             </Stack>

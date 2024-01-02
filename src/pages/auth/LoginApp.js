@@ -11,7 +11,7 @@ const LoginPage = () => {
     const handleButtonClick = async () => {
         try {
             const res = await axios.post(`http://localhost:8080/api/v1/auth/signin`, { username, password });
-            localStorage.setItem("token", res.data)
+            localStorage.setItem("token", res.data.jwtToken)
             navigate("/app");
         } catch (error) {
             console.error(error);

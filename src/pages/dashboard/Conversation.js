@@ -25,7 +25,7 @@ const Conversation = () => {
                 })}
 
             </ScrollBar>
-            <MessageInput endpoint={"/send"} />
+            <MessageInput endpoint={"/messages"} />
 
         </Stack>
     );
