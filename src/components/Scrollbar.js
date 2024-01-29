@@ -27,9 +27,10 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const ScrollBar = ({ children, autoScrollTo }) => {
+const ScrollBar = ({ children, autoScrollTo, stackDirection = 'bottom' }) => {
   const messagesEndRef = useRef(null);
   const messagesStartRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,6 +41,24 @@ const ScrollBar = ({ children, autoScrollTo }) => {
   };
 
   useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+
+    const handleScroll = () => {
+      const isAtBottom = scrollContainer.scrollTop + scrollContainer.clientHeight === scrollContainer.scrollHeight;
+
+      if (autoScrollTo === "bottom" && isAtBottom) {
+        scrollToBottom();
+      }
+    };
+
+    scrollContainer.addEventListener('scroll', handleScroll);
+
+    return () => {
+      scrollContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, [autoScrollTo]);
+
+  useEffect(() => {
     if (autoScrollTo === "bottom") {
       scrollToBottom();
     } else if (autoScrollTo === "top") {
@@ -48,9 +67,16 @@ const ScrollBar = ({ children, autoScrollTo }) => {
   }, [children, autoScrollTo]);
 
   return (
-    <StyledStack sx={{ paddingRight:"4px"}} spacing={1.5} direction={"column"} justifyContent={"space-between"}>
+    <StyledStack
+      ref={scrollContainerRef}
+      sx={{ paddingRight:"4px"}}
+      spacing={1.5}
+      direction={"column"}
+      justifyContent={"space-between"}
+    >
       <div ref={messagesStartRef} />
-      {children}
+      {stackDirection === 'top' && [...children].reverse()}
+      {stackDirection === 'bottom' && children}
       <div ref={messagesEndRef} />
     </StyledStack>
   );

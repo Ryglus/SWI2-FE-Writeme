@@ -1,4 +1,6 @@
-import React from "react";
+// ChatElement.jsx
+
+import React, { useState } from "react";
 import { Box, Typography, Avatar, Badge, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
@@ -10,42 +12,49 @@ const truncateText = (text, length) => {
     }
 };
 
-const ChatElement = ({ img, name, msg, time, unread, online, id }) => {
-
+const ChatElement = ({ room = {}, lastMessage = {}, user = {}, unread, isDraft, onSelectConversation, isSelected }) => {
     const theme = useTheme();
+
+    const lastMessageProfile = user.profile || lastMessage.profile || {};
+
+    const roomId = room.id || "";
+    const name = room.name || "";
+    const description = room.description || "";
+
+    const lastMessageContent = lastMessage.content || "";
+    const lastMessageTimestamp = lastMessage.timestamp || 0;
+
+    const handleChatElementClick = () => {
+        onSelectConversation({ profile: lastMessageProfile, roomId });
+    };
 
     return (
         <Box
+            onClick={handleChatElementClick}
             sx={{
                 width: "100%",
                 height: 60,
                 borderRadius: 1,
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: theme.palette.background.default,
-            }}>
-            <Stack direction={"row"} sx={{padding: theme.spacing(1)}}>
-
-                {online ? <Badge anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} color="success" overlap="circular" badgeContent=" " variant="dot">
-                    <Avatar alt={name} src={img} />
-                </Badge> : <Avatar alt={name} src={img} />}
-
+                backgroundColor: isSelected ? "#fda92d" : theme.palette.background.default,
+            }}
+        >
+            <Stack direction={"row"} sx={{ padding: theme.spacing(1) }}>
+                <Avatar alt={lastMessageProfile.firstname} src={lastMessageProfile.profilePictureUrl} />
 
                 <Stack sx={{ marginLeft: theme.spacing(1) }}>
-                    <Typography variant="subtitle2">{name}</Typography>
+                    <Typography variant="subtitle2">{lastMessageProfile.firstname + " " + lastMessageProfile.lastname}</Typography>
                     <Typography variant="caption" color="text.secondary">
-                        {truncateText(msg, 20)}
+                        {truncateText(lastMessageContent, 20)}
                     </Typography>
                 </Stack>
-
             </Stack>
-            <Stack sx={{ marginLeft: "auto", marginRight:"5px" }} direction="column" spacing={4} >
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize:10,fontWeight: 420 }}>
-                    {time}
+            <Stack sx={{ marginLeft: "auto", marginRight: "5px" }} direction="column" spacing={4}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, fontWeight: 420 }}>
+                    {new Date(lastMessageTimestamp).toLocaleTimeString()} {/* Convert timestamp to readable time */}
                 </Typography>
-                {unread > 0 && (
-                    <Badge badgeContent={unread} color="primary" sx={{ left: '-8px',bottom:'11px' }} />
-                )}
+                {unread > 0 && <Badge badgeContent={unread} color="primary" sx={{ left: '-8px', bottom: '11px' }} />}
             </Stack>
         </Box>
     );
