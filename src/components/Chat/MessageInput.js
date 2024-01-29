@@ -7,7 +7,7 @@ import { LinkSimple, Smiley, PaperPlaneTilt } from 'phosphor-react';
 import EmojiPicker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
-const MessageInput = ({ endpoint, roomId }) => {
+const MessageInput = ({ endpoint, roomId, people }) => {
     const theme = useTheme();
     const [inputValue, setInputValue] = useState('');
     const [openPicker, setOpenPicker] = useState(false);
@@ -34,16 +34,17 @@ const MessageInput = ({ endpoint, roomId }) => {
             setInputValue('');
         }
     };
-
     const sendRequest = () => {
-
-        axios.post("http://localhost:8080/api/v1" + endpoint, { roomId: roomId, content: inputValue })
+        if (roomId) {
+            axios.post("http://localhost:8080/api/v1" + endpoint, { roomId: roomId, content: inputValue })
             .then((response) => {
                 console.log(response.data);
             })
             .catch((error) => {
                 console.error(error);
-            });
+            }); 
+        }
+       
     };
 
 

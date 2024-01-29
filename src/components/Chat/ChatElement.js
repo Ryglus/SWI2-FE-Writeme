@@ -1,5 +1,3 @@
-// ChatElement.jsx
-
 import React, { useState } from "react";
 import { Box, Typography, Avatar, Badge, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -15,14 +13,15 @@ const truncateText = (text, length) => {
 const ChatElement = ({ room = {}, lastMessage = {}, user = {}, unread, isDraft, onSelectConversation, isSelected }) => {
     const theme = useTheme();
 
-    const lastMessageProfile = user.profile || lastMessage.profile || {};
+    const lastMessageProfile = lastMessage && lastMessage.profile ? lastMessage.profile : (user && user.profile ? user.profile : {});
 
     const roomId = room.id || "";
     const name = room.name || "";
     const description = room.description || "";
 
-    const lastMessageContent = lastMessage.content || "";
-    const lastMessageTimestamp = lastMessage.timestamp || 0;
+    // Ensure lastMessage is not null before accessing its properties
+    const lastMessageContent = lastMessage && lastMessage.content ? lastMessage.content : "";
+    const lastMessageTimestamp = lastMessage && lastMessage.timestamp ? lastMessage.timestamp : 0;
 
     const handleChatElementClick = () => {
         onSelectConversation({ profile: lastMessageProfile, roomId });
@@ -41,7 +40,7 @@ const ChatElement = ({ room = {}, lastMessage = {}, user = {}, unread, isDraft, 
             }}
         >
             <Stack direction={"row"} sx={{ padding: theme.spacing(1) }}>
-                <Avatar alt={lastMessageProfile.firstname} src={lastMessageProfile.profilePictureUrl} />
+                <Avatar alt={lastMessageProfile.firstname} src={lastMessageProfile.profilePictureUrl || ''} />
 
                 <Stack sx={{ marginLeft: theme.spacing(1) }}>
                     <Typography variant="subtitle2">{lastMessageProfile.firstname + " " + lastMessageProfile.lastname}</Typography>

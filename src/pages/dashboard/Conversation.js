@@ -65,7 +65,8 @@ const Conversation = ({ selectedPerson }) => {
     }
   }, [selectedPerson]);
 
-  if (!selectedPerson) {
+  
+  if (!selectedPerson || !selectedPerson.profile) {
     return (
       <Typography variant="caption">Select a person to start a conversation</Typography>
     );
@@ -76,7 +77,7 @@ const Conversation = ({ selectedPerson }) => {
       <Stack direction="row" spacing={1} alignItems={"center"} sx={{ width: "100%", padding: "10px", boxShadow: "0px 1px 0px 0px rgba(0, 0, 0, 0.1)" }}>
         <Avatar src={selectedPerson.profile.profilePictureUrl} />
         <Stack direction="column">
-          <Typography variant="h5">{selectedPerson.profile.firstname + " " + selectedPerson.profile.lastname}</Typography>
+          <Typography variant="h5">{`${selectedPerson.profile.firstname} ${selectedPerson.profile.lastname}`}</Typography>
           <Typography variant="caption">{selectedPerson.profile.bio}</Typography>
         </Stack>
       </Stack>
@@ -85,7 +86,7 @@ const Conversation = ({ selectedPerson }) => {
           <MessageElement key={el.timestamp} sender={el.profile} content={el.content} />
         ))}
       </ScrollBar>
-      <MessageInput endpoint={"/messages"} roomId={selectedPerson.roomId} socket={socketRef.current} />
+      <MessageInput endpoint={"/messages"} roomId={selectedPerson.roomId} person={selectedPerson} />
     </Stack>
   );
 };

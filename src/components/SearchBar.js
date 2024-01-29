@@ -23,6 +23,7 @@ const SearchBar = ({ onChange }) => {
     }
   }, [searchTerm]);
 
+
   return (
     <Autocomplete
       options={searchResults}
@@ -44,7 +45,12 @@ const SearchBar = ({ onChange }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       )}
-      onChange={(event, value) => onChange(value)}
+      onChange={(event, value) => {
+        // Check if value is truthy before passing it further
+        if (value) {
+          onChange(value);
+        }
+      }}
     />
   );
 };
