@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # BE REPO
 
-Repo for project [springboot-BE]([https://github.com/facebook/create-react-app](https://github.com/janmelichar/Writeme-Spring-boot)).
+Repo for project [springboot](https://github.com/janmelichar/Writeme-Spring-boot).
 
 ## Available Scripts
 
